@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block title %}Listar Produtos{% endblock %}
+{% block main %}
+    <!--Tabela de produtos-->
+    <h3 class="home" align="center">Produtos</h3>
+    <div class="row">
+        <div class="col-12">
+            <form class="form-inline">
+                <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" name="pesquisa" placeholder="Pesquisar">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Pesquisar</button>
+            </form>
+        </div>
+    </div>
+    {% if pesquisa %}
+        <h4>Resultado de pesquisa para <strong>{{ pesquisa }}</strong></h4>
+    {% endif %}
+    <table class="table table-striped">
+        <tbody>
+        {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.descricao }}</td>
+                <td>{{ produto.marca }}</td>
+                <td>{{ produto.preco }}</td>
+                <!--<td><a href="../../media/{{ person.foto }}" title="ver foto"><i class="fa fa-picture-o"></i></a></td>-->
+                <td>
+                    <a href="{% url 'produtos_update' produto.id %}" class="badge badge-primary" title="atualizar"><i class="fa fa-refresh"></i></a>
+                    <a href="#" class="badge badge-danger" title="remover" onclick="confirm_delete('{{ produto.id }}', '{{ produto.descricao }}')"><i class="fa fa-trash-o"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <!--Fim tabela-->
+    <p><a href="{% url 'produtos_new' %}" class="btn btn-success" title="adicionar produto"><i class="fa fa-plus-circle"></i></a></p>
+    <!--Script para janela de confirmação do botão remover -->
+    <script>
+    function confirm_delete(id, nome){
+        if(confirm(`Tem certeza que deseja excluir: ${nome} ?`)){
+            var url = "{% url 'produtos_delete' 123 %}"
+            document.location.href = url.replace('123', id);
+        }
+    }
+    </script>
+{% endblock %}

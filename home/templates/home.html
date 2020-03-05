@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block title %}Seja Bem Vindo{% endblock %}
+{% block main %}
+    <h3 class="home" align="center">Seja bem Vindo</h3>
+    {% if user.is_authenticated %}
+        <p align="center"><strong>{{ user.username }}</strong></p>
+        <p align="center"><a href="{% url 'my_logout' %}" class="btn btn-primary">Sair</a></p>
+    {% else %}
+        <p align="center"><a href="{% url 'login' %}" class="btn btn-primary">Entrar</a></p>
+        <div class="container bg-success text-white">
+            <p><h4>Login de teste:</h4></p>
+            <p>Usuário: <strong>admin</strong></p>
+            <p>Senha: <strong>1234</strong></p>
+        </div>
+    {% endif %}
+{% endblock %}
